@@ -1,0 +1,14 @@
+gsap.registerPlugin(useGSAP)
+
+useGSAP(() => {
+  gsap.to("html", {
+    backgroundColor: "#1fa95b",
+    scrollTrigger: {
+        trigger: ".trigger",
+        start: "top top",
+        scrub: true,
+        endTriggers: ".end-trigger",
+        end: "top top",
+    }
+  })
+}, [])
