@@ -13,7 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Dog = () => {
+const Dog = ({ onModelLoaded }) => {
   const { gl } = useThree();
 
   const baseTextures = useTexture(
@@ -178,6 +178,17 @@ const Dog = () => {
     });
   }, [model, baseTextures, branchTextures, mat2, mat19, actions]);
 
+  // Signal when model is loaded
+  useEffect(() => {
+    if (model && onModelLoaded) {
+      // Add a small delay to ensure everything is fully initialized
+      const loadTimer = setTimeout(() => {
+        onModelLoaded();
+      }, 500);
+      return () => clearTimeout(loadTimer);
+    }
+  }, [model, onModelLoaded]);
+
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -186,7 +197,6 @@ const Dog = () => {
         start: "top top",
         end: "bottom bottom",
         scrub: true,
-     
       },
     });
 

@@ -1,11 +1,20 @@
 import * as THREE from 'three'
+import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import './App.css'
 import Dog from './components/Dog'
+import LoadingScreen from './components/LoadingScreen'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  const handleModelLoaded = () => {
+    setIsLoading(false)
+  }
+
  return (
   <>
+  <LoadingScreen isLoading={isLoading} />
   <main>
     <div  id="start" className="images">
       <img id='tomorrowland' src="/tommorowland.png" alt="tml" />
@@ -29,7 +38,7 @@ function App() {
     zIndex: 1,
   }}
   >
-    <Dog/>
+    <Dog onModelLoaded={handleModelLoaded} />
   </Canvas>
   <section id="section-1">
     <nav>
